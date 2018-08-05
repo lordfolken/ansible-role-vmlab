@@ -1,0 +1,5 @@
+---
+ - name: ensure installed libvirt
+   apt: 
+     name: libvirt-daemon-system
+     default-release: "{{ ansible_distribution_release }}-backports"

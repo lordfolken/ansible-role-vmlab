@@ -1,0 +1,38 @@
+ansible_role_libvirtd_root_password: '!'
+ansible_role_libvirtd_users: 
+  - root
+ansible_role_libvirtd_mntpoint: /opt/vmlandscape/
+ansible_role_libvirtd:
+  zpool: zfs
+  zvol: vmlandscape
+  mntpoint: /var/lib/vmlandscape
+  netname: vmlandscape-net
+  bridge: virbr0
+  domainname: sigkill.noexit
+  zvolcontrol: vmlandscape-control
+  mntpointcontrol: /opt/vmlandscape-control/
+  qstring: qemu:///system
+
+ansible_role_libvirtd_virtoses:
+  debian:
+    boxname: base-debian-9.sigkill.noexit
+    memory: 1024
+    cpu: 2
+    disksize: 10
+    osvariant: debian8
+    installpath: /dists/stretch/main/installer-amd64 
+    extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN"
+    preseed_url: "preseed/url=http://192.168.122.1/debian/debian.preseed"
+  opensuse:
+    boxname: base-opensuse-42.sigkill.noexit
+    memory: 1024
+    cpu: 2
+    disksize: 10
+    osvariant: debian8
+    installpath: /distribution/openSUSE-current/repo/oss/
+    extra_args: "console=tty0,ttyS0,115200n8 serial auto keymap=us hostname=$HOSTNAME domain=$DOMAIN netcfg=dhcp"
+    preseed_url: "autoyast=http://192.168.122.1/opensuse/opensuse.preseed"
+ 
+approx_host_port: "192.168.122.1:9999"
+preseed_host: 192.168.122.1
+

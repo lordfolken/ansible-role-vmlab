@@ -1,0 +1,13 @@
+---
+ - name: restart_libvirtd
+   service:
+     name: libvirtd
+     state: restarted
+
+ - name: apache_reload
+   service:
+     name: apache2
+     state: reloaded
+
+ - name: rebuild_debian-9-vm
+   command: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/debian-base-9-create.sh"

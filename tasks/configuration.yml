@@ -64,8 +64,7 @@
      uri: '{{ ansible_role_libvirtd.qstring }}'
      name: '{{ ansible_role_libvirtd.netname }}'
      xml: '{{ lookup("template", "net.xml.jp2") }}'
-     state: active
-     autostart: yes
+     command: define
 
  - name: start vmlandscape net
    virt_net:
@@ -144,10 +143,9 @@
  - name: deploy superuser scripts
    copy:
      src: "sbin/{{ item }}"
-     dest: "{{ ansible_role_libvirtd.mntpoint_control_path }}/sbin/{{ item }}"
+     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/{{ item }}"
      mode: 0755
    with_items:
    - debian-base-9-clone.sh
    - debian-base-9-create.sh
    - vm-destroy.sh 
-   notify: rebuild-debian-9-vm

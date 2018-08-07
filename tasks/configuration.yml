@@ -146,6 +146,11 @@
      dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/{{ item }}"
      mode: 0755
    with_items:
-   - debian-base-9-clone.sh
    - debian-base-9-create.sh
    - vm-destroy.sh 
+
+ - name: deploy clone script with user contenxt
+   template:
+     src: debian-base-9-clone.sh.j2
+     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/{{ item }}"
+     mode: 0755

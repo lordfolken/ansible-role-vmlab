@@ -1,4 +1,5 @@
 ansible_role_libvirtd_root_password: '!'
+ansible_role_libvirtd_root_sshkey: "" 
 ansible_role_libvirtd_users: 
   - root
 ansible_role_libvirtd_mntpoint: /opt/vmlandscape/

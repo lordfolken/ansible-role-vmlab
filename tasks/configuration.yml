@@ -152,5 +152,5 @@
  - name: deploy clone script with user contenxt
    template:
      src: debian-base-9-clone.sh.j2
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/{{ item }}"
+     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/debian-base-9-clone.sh"
      mode: 0755

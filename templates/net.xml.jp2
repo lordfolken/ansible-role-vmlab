@@ -6,10 +6,10 @@
     </nat>
   </forward>
   <domain name='{{ ansible_role_libvirtd.domainname }}' localOnly='yes'/>
-  <ip address='192.168.122.1' netmask='255.255.255.0'>
+  <ip address='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') }}' netmask='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('netmask')'>
     <dhcp>
-      <range start='192.168.122.128' end='192.168.122.254'/>
-      <bootp file='pxelinux.0' server='192.168.122.125' /> 
+      <range start='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('128') }}' end='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('254') }}'/>
+      <bootp file='pxelinux.0' server='{{ ansible_role_libvirtd.vmlandscapetftpserver }}' /> 
     </dhcp>
   </ip>
 </network>

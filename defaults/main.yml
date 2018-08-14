@@ -13,6 +13,7 @@ ansible_role_libvirtd:
   zvolcontrol: vmlandscape-control
   mntpointcontrol: /opt/vmlandscape-control/
   qstring: qemu:///system
+  vmlandscapenet: 192.168.122.1/24
 
 ansible_role_libvirtd_virtoses:
   debian:

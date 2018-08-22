@@ -16,7 +16,7 @@ virt-install \
   --memory 1024 \
   --vcpus 2 \
   --cpu host \
-  --disk size=10,pool=vmlandscape,bus=virtio \
+  --disk size=10,pool=vmlandscape,bus=virtio,cache=unsafe \
   --net network=vmlandscape-net,model=virtio \
   --os-variant debian8 \
   --os-type linux \

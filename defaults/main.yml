@@ -23,7 +23,7 @@ ansible_role_libvirtd_virtoses:
     disksize: 10
     osvariant: debian8
     installpath: /dists/stretch/main/installer-amd64 
-    extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN"
+    extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian/debian.preseed"
   opensuse:
     boxname: base-opensuse-42.sigkill.noexit

@@ -5,6 +5,7 @@ d-i mirror/http/hostname string {{ approx_host_port }}
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 d-i mirror/suite string stretch
+d-i apt-setup/security_host {{ approx_host }}:{{ approx_host_port }}
 
 d-i passwd/make-user boolean false
 

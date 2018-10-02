@@ -1,6 +1,7 @@
 ansible_role_libvirtd_packages:
   - libvirt-daemon-system
   - libguestfs-tools
+  - virtinst  
 ansible_role_libvirtd_conf_path: /etc/libvirt/libvirtd.conf
 ansible_role_libvirtd_service_name: libvirtd
 ansible_role_libvirtd_user_group: libvirt-qemu

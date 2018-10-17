@@ -7,3 +7,4 @@ ansible_role_libvirtd_service_name: libvirtd
 ansible_role_libvirtd_user_group: libvirt-qemu
 ansible_role_libvirtd_python_packages: 
   - python-libvirt
+  - virtinst

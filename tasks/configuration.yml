@@ -40,7 +40,7 @@
    virt_pool:
      uri: '{{ ansible_role_libvirtd.qstring }}'
      name: '{{ ansible_role_libvirtd.zvolcontrol }}'
-     xml: '{{ lookup("template", "dircontrol.xml.jp2") }}'
+     xml: '{{ lookup("template", "dir.xml.jp2") }}'
      state: present
      mode: overwrite
      autostart: yes

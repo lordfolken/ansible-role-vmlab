@@ -1,8 +1,8 @@
---- 
- - name: configure  
+---
+ - name: configure libvirtd
    template:
      src: libvirtd.conf.j2
-     dest: "{{ ansible_role_libvirtd_conf_path }}" 
+     dest: "{{ ansible_role_libvirtd_conf_path }}"
      owner: root
      group: root
      mode: 0644
@@ -18,13 +18,13 @@
    user:
      name: "{{ item }}"
      groups: "{{ ansible_role_libvirtd_user_group }}"
-     append: yes 
+     append: yes
    with_items: "{{ ansible_role_libvirtd_users }}"
 
  - name: correct permissions
-   file: 
+   file:
      path: "{{ ansible_role_libvirtd.mntpoint }}"
-     owner: "{{ ansible_role_libvirtd_user_group }}" 
+     owner: "{{ ansible_role_libvirtd_user_group }}"
      group: "{{ ansible_role_libvirtd_user_group }}"
 
  - name: define vmlandscape pool
@@ -71,12 +71,12 @@
      uri: '{{ ansible_role_libvirtd.qstring }}'
      name: '{{ ansible_role_libvirtd.netname }}'
      autostart: yes
-     state: active 
+     state: active
 
  - name: create dirs in vmlandscape control dir
    file:
      path: "{{ ansible_role_libvirtd.mntpointcontrol }}/{{ item }}"
-     state: directory   
+     state: directory
      owner: root
      mode: g+rws
      group: '{{ ansible_role_libvirtd_user_group }}'
@@ -112,7 +112,7 @@
      src: vmlandscape.conf.j2
      dest: /etc/apache2/sites-available/vmlandscape.conf
    notify: apache_reload
- 
+
  - name: symlink vmlandscape to sites-enabled
    file:
      src: ../sites-available/vmlandscape.conf
@@ -147,7 +147,7 @@
      mode: 0755
    with_items:
    - debian-base-9-create.sh
-   - vm-destroy.sh 
+   - vm-destroy.sh
 
  - name: deploy clone script with user contenxt
    template:

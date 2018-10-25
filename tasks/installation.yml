@@ -1,10 +1,10 @@
 ---
  - name: ensure installed libvirt
-   package: 
+   package:
      name: libvirt-daemon-system
      default-release: "{{ ansible_distribution_release }}-backports"
 
  - name: ensure python support for libvirt
    package:
      name: "{{ item }}"
-     with_items: "{{ ansible_role_libvirtd_python_packages }}" 
+     with_items: "{{ ansible_role_libvirtd_python_packages }}"

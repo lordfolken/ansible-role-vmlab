@@ -25,24 +25,6 @@
     <image_installation config:type="boolean">false</image_installation>
   </deploy_image>
   <firewall>
-    <FW_ALLOW_FW_BROADCAST_DMZ>no</FW_ALLOW_FW_BROADCAST_DMZ>
-    <FW_ALLOW_FW_BROADCAST_EXT>no</FW_ALLOW_FW_BROADCAST_EXT>
-    <FW_ALLOW_FW_BROADCAST_INT>no</FW_ALLOW_FW_BROADCAST_INT>
-    <FW_ALLOW_FW_TRACEROUTE>yes</FW_ALLOW_FW_TRACEROUTE>
-    <FW_ALLOW_PING_FW>yes</FW_ALLOW_PING_FW>
-    <FW_BOOT_FULL_INIT>no</FW_BOOT_FULL_INIT>
-    <FW_IGNORE_FW_BROADCAST_DMZ>no</FW_IGNORE_FW_BROADCAST_DMZ>
-    <FW_IGNORE_FW_BROADCAST_EXT>yes</FW_IGNORE_FW_BROADCAST_EXT>
-    <FW_IGNORE_FW_BROADCAST_INT>no</FW_IGNORE_FW_BROADCAST_INT>
-    <FW_IPSEC_TRUST>no</FW_IPSEC_TRUST>
-    <FW_LOG_ACCEPT_ALL>no</FW_LOG_ACCEPT_ALL>
-    <FW_LOG_ACCEPT_CRIT>yes</FW_LOG_ACCEPT_CRIT>
-    <FW_LOG_DROP_ALL>no</FW_LOG_DROP_ALL>
-    <FW_LOG_DROP_CRIT>yes</FW_LOG_DROP_CRIT>
-    <FW_MASQUERADE>no</FW_MASQUERADE>
-    <FW_PROTECT_FROM_INT>no</FW_PROTECT_FROM_INT>
-    <FW_ROUTE>no</FW_ROUTE>
-    <FW_STOP_KEEP_ROUTING_STATE>no</FW_STOP_KEEP_ROUTING_STATE>
     <enable_firewall config:type="boolean">false</enable_firewall>
     <start_firewall config:type="boolean">false</start_firewall>
   </firewall>
@@ -475,13 +457,6 @@
     <ipv6 config:type="boolean">true</ipv6>
     <keep_install_network config:type="boolean">true</keep_install_network>
     <managed config:type="boolean">false</managed>
-    <net-udev config:type="list">
-      <rule>
-        <name>eth0</name>
-        <rule>KERNELS</rule>
-        <value>0000:00:03.0</value>
-      </rule>
-    </net-udev>
     <routing>
       <ipv4_forward config:type="boolean">false</ipv4_forward>
       <ipv6_forward config:type="boolean">false</ipv6_forward>
@@ -871,7 +846,6 @@
       <package>autoyast2</package>
     </packages>
     <patterns config:type="list">
-      <pattern>base</pattern>
       <pattern>minimal_base</pattern>
       <pattern>yast2_basis</pattern>
     </patterns>

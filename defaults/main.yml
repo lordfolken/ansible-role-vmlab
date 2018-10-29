@@ -27,7 +27,7 @@ ansible_role_libvirtd_virtoses:
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian/debian.preseed"
   opensuse:
-    boxname: base-opensuse-15.sigkill.noexit
+    boxname: base-opensuse-current.sigkill.noexit
     memory: 1024
     cpu: 2
     disksize: 10

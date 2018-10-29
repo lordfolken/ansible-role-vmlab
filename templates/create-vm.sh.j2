@@ -1,12 +1,13 @@
 #!/bin/bash
 
 QSTRING="{{ ansible_role_libvirtd.qstring }}"
-HOSTNAME=$(echo $1 | cut -f1 -d.)
-DOMAIN=$(echo $1 | cut -f2- -d.)
-  
-[[ -z "${HOSTNAME}" ]] && BOXNAME="{{ item.value.boxname }}"
-
-BOXNAME="${HOSTNAME}.${DOMAIN}"
+if [ -z "${1}" ]; then 
+  BOXNAME="{{ item.value.boxname }}"
+else 
+  HOSTNAME=$(echo $1 | cut -f1 -d.)
+  DOMAIN=$(echo $1 | cut -f2- -d.)
+  BOXNAME="${HOSTNAME}.${DOMAIN}"
+fi
 
 virsh --connect $QSTRING list --all | grep $BOXNAME 
 if [ "$?" == 0 ]; then

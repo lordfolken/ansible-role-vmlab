@@ -14,6 +14,7 @@ ansible_role_libvirtd:
   mntpointcontrol: /opt/vmlandscape-control/
   qstring: qemu:///system
   vmlandscapenet: 192.168.122.1/24
+  vmlandscapetftpserver: 192.168.122.1
 
 ansible_role_libvirtd_virtoses:
   debian:
@@ -26,15 +27,15 @@ ansible_role_libvirtd_virtoses:
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian/debian.preseed"
   opensuse:
-    boxname: base-opensuse-42.sigkill.noexit
+    boxname: base-opensuse-15.sigkill.noexit
     memory: 1024
     cpu: 2
     disksize: 10
     osvariant: debian8
     installpath: /distribution/openSUSE-current/repo/oss/
-    extra_args: "console=tty0,ttyS0,115200n8 serial auto keymap=us hostname=$HOSTNAME domain=$DOMAIN netcfg=dhcp"
+    extra_args: "console=tty0,ttyS0,115200n8 serial auto keymap=us hostname=$HOSTNAME domain=$DOMAIN netcfg=dhcp install=http://192.168.122.1:9999/opensuse/distribution/openSUSE-current/repo/oss/"
     preseed_url: "autoyast=http://192.168.122.1/opensuse/opensuse.preseed"
  
 approx_host_port: "192.168.122.1:9999"
-preseed_host: 192.168.122.1
+approx_host: 192.168.122.1
 

@@ -9,7 +9,7 @@
   <ip address='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') }}' netmask='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('netmask') }}'>
     <dhcp>
       <range start='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('128') }}' end='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('254') }}'/>
-      <bootp file='pxelinux.0' server='{{ ansible_role_libvirtd.vmlandscapetftpserver }}' /> 
+      <bootp file='pxelinux.0' server='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') }}' /> 
     </dhcp>
   </ip>
 </network>

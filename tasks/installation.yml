@@ -4,7 +4,11 @@
      name: libvirt-daemon-system
      default-release: "{{ ansible_distribution_release }}-backports"
 
+ - name: debug
+   debug:
+     var: ansible_role_libvirtd_python_packages
+
  - name: ensure python support for libvirt
    package:
      name: "{{ item }}"
-     with_items: "{{ ansible_role_libvirtd_python_packages }}"
+   loop: "{{ ansible_role_libvirtd_python_packages }}"

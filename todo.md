@@ -4,3 +4,4 @@
 * subnets need a nat yes no parameter 
 * the "really autostart X" is at the moment reactive to any change, not a particular item.
 * this role needs a good readme
+* needs support for storage volumes to be mounted (zfs or similar)

@@ -7,18 +7,30 @@ ansible_role_libvirtd:
   zpool: zfs
   zvol: vmlandscape
   mntpoint: /var/lib/vmlandscape
-  netname: vmlandscape-net
-  bridge: virbr0
-  domainname: sigkill.noexit
   zvolcontrol: vmlandscape-control
   mntpointcontrol: /opt/vmlandscape-control/
   qstring: qemu:///system
-  vmlandscapenet: 192.168.122.1/24
-  vmlandscapetftpserver: 192.168.122.1
+
+ansible_role_libvirtd_pools:
+  vmlandscape:
+    mountpoint: /var/lib/vmlandscape
+  vmlandscape-control:
+    mountpoint: /opt/vmlandscape-control
+
+ansible_role_libvirtd_nets:
+  vmlandscape:
+    domainname: example.noexit
+    subnet: 192.168.122.1/24
+  testnet1:
+    domainname: test1.example.noexit
+    subnet: 192.168.123.1/24
+  testnet2:
+    domainname: test2.example.noexit
+    subnet: 192.168.124.1/24
 
 ansible_role_libvirtd_virtoses:
   debian:
-    boxname: base-debian-9.sigkill.noexit
+    boxname: base-debian-9.example.noexit
     memory: 1024
     cpu: 2
     disksize: 10
@@ -26,8 +38,10 @@ ansible_role_libvirtd_virtoses:
     installpath: /dists/stretch/main/installer-amd64 
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian/debian.preseed"
+    location_host: 192.168.122.1:9999 
+    netname: vmlandscape 
   opensuse:
-    boxname: base-opensuse-current.sigkill.noexit
+    boxname: base-opensuse-current.example.noexit
     memory: 1024
     cpu: 2
     disksize: 10
@@ -35,7 +49,5 @@ ansible_role_libvirtd_virtoses:
     installpath: /distribution/openSUSE-current/repo/oss/
     extra_args: "console=tty0,ttyS0,115200n8 serial auto keymap=us hostname=$HOSTNAME domain=$DOMAIN netcfg=dhcp install=http://192.168.122.1:9999/opensuse/distribution/openSUSE-current/repo/oss/"
     preseed_url: "autoyast=http://192.168.122.1/opensuse/opensuse.preseed"
- 
-approx_host_port: "192.168.122.1:9999"
-approx_host: 192.168.122.1
-
+    location_host: 192.168.122.1:9999 
+    netname: vmlandscape 

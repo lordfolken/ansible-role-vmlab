@@ -1,15 +1,15 @@
 <network>
-  <name>{{ ansible_role_libvirtd.netname }}</name>
+  <name>{{ item.key }}</name>
   <forward mode='nat'>
     <nat>
       <port start='1024' end='65535'/>
     </nat>
   </forward>
-  <domain name='{{ ansible_role_libvirtd.domainname }}' localOnly='yes'/>
-  <ip address='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') }}' netmask='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('netmask') }}'>
+  <domain name='{{ item.value.domainname }}' localOnly='yes'/>
+  <ip address='{{ item.value.subnet | ipaddr('address') }}' netmask='{{ item.value.subnet | ipaddr('netmask') }}'>
     <dhcp>
-      <range start='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('128') }}' end='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') | ipaddr('254') }}'/>
-      <bootp file='pxelinux.0' server='{{ ansible_role_libvirtd.vmlandscapenet | ipaddr('address') }}' /> 
+      <range start='{{ item.value.subnet | ipaddr('address') | ipaddr('128') }}' end='{{ item.value.subnet | ipaddr('address') | ipaddr('254') }}'/>
+      <bootp file='pxelinux.0' server='{{ item.value.subnet | ipaddr('address') }}' /> 
     </dhcp>
   </ip>
 </network>

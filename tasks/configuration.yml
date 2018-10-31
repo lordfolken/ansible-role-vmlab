@@ -21,57 +21,59 @@
      append: yes
    with_items: "{{ ansible_role_libvirtd_users }}"
 
- - name: correct permissions
+ - name: ensure vmlandscape mountpoint
    file:
-     path: "{{ ansible_role_libvirtd.mntpoint }}"
+     path: "{{ item.value.mountpoint }}"
      owner: "{{ ansible_role_libvirtd_user_group }}"
      group: "{{ ansible_role_libvirtd_user_group }}"
+     state: directory
+   with_dict: '{{ ansible_role_libvirtd_pools }}' 
 
- - name: define vmlandscape pool
+ - name: define vmlandscape pools
    virt_pool:
      uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.zvol }}'
+     name: '{{ item.key }}'
      xml: '{{ lookup("template", "dir.xml.jp2") }}'
      mode: overwrite
      state: present
      autostart: yes
+   with_dict: '{{ ansible_role_libvirtd_pools }}' 
+   register: vmlandscapepools
 
- - name: define vmlandscape control pool
+ - name: activate vmlandscape pools
    virt_pool:
      uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.zvolcontrol }}'
-     xml: '{{ lookup("template", "dir.xml.jp2") }}'
-     state: present
-     mode: overwrite
-     autostart: yes
-
- - name: activate vmlandscape pool
-   virt_pool:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.zvol }}'
+     name: '{{ item.key }}'
      state: active
      autostart: yes
+   with_dict: '{{ ansible_role_libvirtd_pools }}' 
 
- - name: autostart vmlandscape control pool
-   virt_pool:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.zvolcontrol }}'
-     state: active
-     autostart: yes
+ - name: really autostart vmlandscape pools
+   shell: 'virsh pool-autostart --pool {{ item.key }}' 
+   with_dict: '{{ ansible_role_libvirtd_pools }}' 
+   when: vmlandscapepools.changed
 
- - name: define vmlandscape net
+ - name: define vmlandscape nets
    virt_net:
      uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.netname }}'
+     name: '{{ item.key }}'
      xml: '{{ lookup("template", "net.xml.jp2") }}'
      command: define
+   with_dict: '{{ ansible_role_libvirtd_nets }}' 
+   register: vmlandscapenets
 
- - name: start vmlandscape net
+ - name: start vmlandscape nets
    virt_net:
      uri: '{{ ansible_role_libvirtd.qstring }}'
-     name: '{{ ansible_role_libvirtd.netname }}'
+     name: '{{ item.key }}'
      autostart: yes
      state: active
+   with_dict: '{{ ansible_role_libvirtd_nets }}' 
+
+ - name: really autostart vmlandscape nets
+   shell: 'virsh net-autostart --network {{ item.key }}' 
+   with_dict: '{{ ansible_role_libvirtd_nets }}' 
+   when: vmlandscapenets.changed
 
  - name: create dirs in vmlandscape control dir
    file:
@@ -107,7 +109,7 @@
      state: started
      enabled: true
 
- - name: install vmlandscape
+ - name: install vmlandscape preseed host configuration
    template:
      src: vmlandscape.conf.j2
      dest: /etc/apache2/sites-available/vmlandscape.conf

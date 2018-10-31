@@ -21,11 +21,11 @@ virt-install \
   --vcpus {{ item.value.cpu }} \
   --cpu host \
   --disk size={{ item.value.disksize }},pool={{ ansible_role_libvirtd.zvol }},bus=virtio \
-  --net network={{ ansible_role_libvirtd.netname }},model=virtio \
+  --net network={{ item.value.netname }},model=virtio \
   --os-variant {{ item.value.osvariant }} \
   --os-type linux \
   --name "$BOXNAME" \
   --noautoconsole \
   --console pty,target_type=serial \
-  --location 'http://{{ approx_host_port }}/{{ item.key }}/{{ item.value.installpath }}' \
+  --location 'http://{{ item.value.location_host }}/{{ item.key }}/{{ item.value.installpath }}' \
   --extra-args "{{ item.value.extra_args }} {{ item.value.preseed_url }}"

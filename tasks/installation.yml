@@ -11,4 +11,4 @@
  - name: ensure python support for libvirt
    package:
      name: "{{ item }}"
-   loop: "{{ ansible_role_libvirtd_python_packages }}"
+   with_items: "{{ ansible_role_libvirtd_python_packages }}"

@@ -1,0 +1,23 @@
+@ansible_home = "/etc/ansible/"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/stretch64"
+  config.vm.define "ansible-role-libvirtd"
+  # Prevent TTY Errors (copied from laravel/homestead: "homestead.rb" file)... By default this is "bash -l".
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+ if Vagrant.has_plugin?("vagrant-cachier")
+     config.cache.scope = :box
+     config.cache.synced_folder_opts = {type: :nfs}
+  end
+  config.vm.synced_folder "../", "/vagrant", disabled: "True"
+  config.vm.synced_folder "../", "#{@ansible_home}/roles/ansible-role-libvirtd", type: "nfs"
+
+  config.vm.provision "shell", inline: "mkdir -p /vagrant 2> /dev/null "
+  config.vm.provision "shell", inline: "chown vagrant:vagrant /vagrant"
+  config.vm.provision "shell", inline: "cp /etc/ansible/roles/ansible-role-libvirtd/tests/test.yml /etc/ansible/test.yml"
+  config.vm.provision "shell", inline: "apt-get install -y python-lxml"
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.config_file = "#{@ansible_home}/roles/ansible-role-libvirtd/tests/ansible-vagrant.cfg"
+    ansible.playbook = "#{@ansible_home}/test.yml"
+ end
+end

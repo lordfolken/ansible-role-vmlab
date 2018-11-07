@@ -27,7 +27,7 @@
      owner: "{{ ansible_role_libvirtd_user_group }}"
      group: "{{ ansible_role_libvirtd_user_group }}"
      state: directory
-   with_dict: '{{ ansible_role_libvirtd_pools }}' 
+   with_dict: '{{ ansible_role_libvirtd_pools }}'
 
  - name: define vmlandscape pools
    virt_pool:
@@ -37,8 +37,8 @@
      mode: overwrite
      state: present
      autostart: yes
-   with_dict: '{{ ansible_role_libvirtd_pools }}' 
-   register: vmlandscapepools
+   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   notify: autostart_landscape_pools
 
  - name: activate vmlandscape pools
    virt_pool:
@@ -46,12 +46,8 @@
      name: '{{ item.key }}'
      state: active
      autostart: yes
-   with_dict: '{{ ansible_role_libvirtd_pools }}' 
-
- - name: really autostart vmlandscape pools
-   shell: 'virsh pool-autostart --pool {{ item.key }}' 
-   with_dict: '{{ ansible_role_libvirtd_pools }}' 
-   when: vmlandscapepools.changed
+   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   notify: autostart_landscape_pools
 
  - name: define vmlandscape nets
    virt_net:
@@ -59,8 +55,8 @@
      name: '{{ item.key }}'
      xml: '{{ lookup("template", "net.xml.jp2") }}'
      command: define
-   with_dict: '{{ ansible_role_libvirtd_nets }}' 
-   register: vmlandscapenets
+   with_dict: '{{ ansible_role_libvirtd_nets }}'
+   notify: autostart_landscape_nets
 
  - name: start vmlandscape nets
    virt_net:
@@ -68,12 +64,8 @@
      name: '{{ item.key }}'
      autostart: yes
      state: active
-   with_dict: '{{ ansible_role_libvirtd_nets }}' 
-
- - name: really autostart vmlandscape nets
-   shell: 'virsh net-autostart --network {{ item.key }}' 
-   with_dict: '{{ ansible_role_libvirtd_nets }}' 
-   when: vmlandscapenets.changed
+   with_dict: '{{ ansible_role_libvirtd_nets }}'
+   notify: autostart_landscape_nets
 
  - name: create dirs in vmlandscape control dir
    file:

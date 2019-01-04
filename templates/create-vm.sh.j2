@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QSTRING="{{ ansible_role_libvirtd.qstring }}"
+QSTRING="{{ ansible_role_vmlab.qstring }}"
 if [ -z "${1}" ]; then 
   BOXNAME="{{ item.value.boxname }}"
 else 
@@ -20,7 +20,7 @@ virt-install \
   --memory {{ item.value.memory }} \
   --vcpus {{ item.value.cpu }} \
   --cpu host \
-  --disk size={{ item.value.disksize }},pool={{ ansible_role_libvirtd.zvol }},bus=virtio \
+  --disk size={{ item.value.disksize }},pool={{ ansible_role_vmlab.zvol }},bus=virtio \
   --net network={{ item.value.netname }},model=virtio \
   --os-variant {{ item.value.osvariant }} \
   --os-type linux \

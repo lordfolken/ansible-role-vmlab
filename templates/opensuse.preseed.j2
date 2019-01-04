@@ -885,7 +885,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>0</uid>
-      <user_password>{{ ansible_role_libvirtd_root_password | password_hash() }}</user_password>
+      <user_password>{{ ansible_role_vmlab_root_password | password_hash() }}</user_password>
       <username>root</username>
     </user>
     <user>

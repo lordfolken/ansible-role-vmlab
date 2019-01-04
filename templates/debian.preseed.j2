@@ -1,11 +1,11 @@
 # for internal use
 
 d-i mirror/country string manual
-d-i mirror/http/hostname string {{ ansible_role_libvirtd_virtoses.debian.location_host }}
+d-i mirror/http/hostname string {{ ansible_role_vmlab_virtoses.debian.location_host }}
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 d-i mirror/suite string stretch
-d-i apt-setup/security_host {{ ansible_role_libvirtd_virtoses.debian.location_host }}
+d-i apt-setup/security_host {{ ansible_role_vmlab_virtoses.debian.location_host }}
 
 d-i passwd/make-user boolean false
 

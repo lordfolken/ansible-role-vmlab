@@ -1,8 +1,8 @@
-{% for preseed_host in ansible_role_libvirtd_nets.values() %}
+{% for preseed_host in ansible_role_vmlab_nets.values() %}
 <VirtualHost {{ preseed_host.subnet | ipaddr('address') }}:80>
 	ServerAdmin webmaster@localhost
-	DocumentRoot {{ ansible_role_libvirtd.mntpointcontrol }}/public_html/
-  <Directory {{ ansible_role_libvirtd.mntpointcontrol }}/public_html/>
+	DocumentRoot {{ ansible_role_vmlab.mntpointcontrol }}/public_html/
+  <Directory {{ ansible_role_vmlab.mntpointcontrol }}/public_html/>
 	Options Indexes FollowSymLinks
 	AllowOverride None
 	Require all granted

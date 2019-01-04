@@ -10,12 +10,12 @@
      state: reloaded
 
  - name: rebuild_debian-9-vm
-   command: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/debian-base-9-create.sh"
+   command: "{{ ansible_role_vmlab.mntpointcontrol }}/sbin/debian-base-9-create.sh"
 
  - name: autostart_landscape_pools
    command: 'virsh pool-autostart --pool {{ item.key }}'
-   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   with_dict: '{{ ansible_role_vmlab_pools }}'
 
  - name: autostart_landscape_nets
    command: 'virsh net-autostart --network {{ item.key }}'
-   with_dict: '{{ ansible_role_libvirtd_nets }}'
+   with_dict: '{{ ansible_role_vmlab_nets }}'

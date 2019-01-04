@@ -2,7 +2,7 @@
  - name: configure libvirtd
    template:
      src: libvirtd.conf.j2
-     dest: "{{ ansible_role_libvirtd_conf_path }}"
+     dest: "{{ ansible_role_vmlab_conf_path }}"
      owner: root
      group: root
      mode: 0644
@@ -10,70 +10,70 @@
 
  - name: ensure libvirtd is running
    service:
-     name: "{{ ansible_role_libvirtd_service_name }}"
+     name: "{{ ansible_role_vmlab_service_name }}"
      state: started
      enabled: true
 
  - name: add users to libvirtd group
    user:
      name: "{{ item }}"
-     groups: "{{ ansible_role_libvirtd_user_group }}"
+     groups: "{{ ansible_role_vmlab_user_group }}"
      append: yes
-   with_items: "{{ ansible_role_libvirtd_users }}"
+   with_items: "{{ ansible_role_vmlab_users }}"
 
  - name: ensure vmlandscape mountpoint
    file:
      path: "{{ item.value.mountpoint }}"
-     owner: "{{ ansible_role_libvirtd_user_group }}"
-     group: "{{ ansible_role_libvirtd_user_group }}"
+     owner: "{{ ansible_role_vmlab_user_group }}"
+     group: "{{ ansible_role_vmlab_user_group }}"
      state: directory
-   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   with_dict: '{{ ansible_role_vmlab_pools }}'
 
  - name: define vmlandscape pools
    virt_pool:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
+     uri: '{{ ansible_role_vmlab.qstring }}'
      name: '{{ item.key }}'
      xml: '{{ lookup("template", "dir.xml.jp2") }}'
      mode: overwrite
      state: present
      autostart: yes
-   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   with_dict: '{{ ansible_role_vmlab_pools }}'
    notify: autostart_landscape_pools
 
  - name: activate vmlandscape pools
    virt_pool:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
+     uri: '{{ ansible_role_vmlab.qstring }}'
      name: '{{ item.key }}'
      state: active
      autostart: yes
-   with_dict: '{{ ansible_role_libvirtd_pools }}'
+   with_dict: '{{ ansible_role_vmlab_pools }}'
    notify: autostart_landscape_pools
 
  - name: define vmlandscape nets
    virt_net:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
+     uri: '{{ ansible_role_vmlab.qstring }}'
      name: '{{ item.key }}'
      xml: '{{ lookup("template", "net.xml.jp2") }}'
      command: define
-   with_dict: '{{ ansible_role_libvirtd_nets }}'
+   with_dict: '{{ ansible_role_vmlab_nets }}'
    notify: autostart_landscape_nets
 
  - name: start vmlandscape nets
    virt_net:
-     uri: '{{ ansible_role_libvirtd.qstring }}'
+     uri: '{{ ansible_role_vmlab.qstring }}'
      name: '{{ item.key }}'
      autostart: yes
      state: active
-   with_dict: '{{ ansible_role_libvirtd_nets }}'
+   with_dict: '{{ ansible_role_vmlab_nets }}'
    notify: autostart_landscape_nets
 
  - name: create dirs in vmlandscape control dir
    file:
-     path: "{{ ansible_role_libvirtd.mntpointcontrol }}/{{ item }}"
+     path: "{{ ansible_role_vmlab.mntpointcontrol }}/{{ item }}"
      state: directory
      owner: root
      mode: g+rws
-     group: '{{ ansible_role_libvirtd_user_group }}'
+     group: '{{ ansible_role_vmlab_user_group }}'
    with_items:
    - sbin
    - bin
@@ -83,13 +83,13 @@
  - name: create shell
    template:
      src: "create-vm.sh.j2"
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/bin/create-vm-{{ item.key }}.sh"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/bin/create-vm-{{ item.key }}.sh"
      mode: 0755
      owner: root
      group: root
    tags:
    - shell
-   with_dict: "{{ ansible_role_libvirtd_virtoses }}"
+   with_dict: "{{ ansible_role_vmlab_virtoses }}"
 
  - name: install apache
    package:
@@ -116,7 +116,7 @@
 
  - name: create deployment dirs
    file:
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/public_html/{{ item }}"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item }}"
      state: directory
    with_items:
    - opensuse
@@ -127,7 +127,7 @@
  - name: deploy preseed
    template:
      src: "{{ item }}.preseed.j2"
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/public_html/{{ item }}/{{ item }}.preseed"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item }}/{{ item }}.preseed"
    with_items:
    - opensuse
    - debian
@@ -137,7 +137,7 @@
  - name: deploy superuser scripts
    copy:
      src: "sbin/{{ item }}"
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/{{ item }}"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/sbin/{{ item }}"
      mode: 0755
    with_items:
    - vm-destroy.sh
@@ -145,5 +145,5 @@
  - name: deploy clone script with user context
    template:
      src: debian-base-9-clone.sh.j2
-     dest: "{{ ansible_role_libvirtd.mntpointcontrol }}/sbin/debian-base-9-clone.sh"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/sbin/debian-base-9-clone.sh"
      mode: 0755

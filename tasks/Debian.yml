@@ -1,5 +1,5 @@
 ---
  - name: enable backports repository
    apt_repository:
-     repo: "deb {{ ansible_role_libvirtd_url }} {{ ansible_distribution_release }}-backports  main contrib non-free"
+     repo: "deb {{ ansible_role_vmlab_url }} {{ ansible_distribution_release }}-backports  main contrib non-free"
      state: present

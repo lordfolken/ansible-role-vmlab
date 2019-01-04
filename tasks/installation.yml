@@ -6,9 +6,9 @@
 
  - name: debug
    debug:
-     var: ansible_role_libvirtd_python_packages
+     var: ansible_role_vmlab_python_packages
 
  - name: ensure python support for libvirt
    package:
      name: "{{ item }}"
-   with_items: "{{ ansible_role_libvirtd_python_packages }}"
+   with_items: "{{ ansible_role_vmlab_python_packages }}"

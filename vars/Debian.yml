@@ -1,12 +1,12 @@
-ansible_role_libvirtd_packages:
+ansible_role_vmlab_packages:
   - libvirt-daemon-system
   - libguestfs-tools
   - virtinst  
-ansible_role_libvirtd_conf_path: /etc/libvirt/libvirtd.conf
-ansible_role_libvirtd_service_name: libvirtd
-ansible_role_libvirtd_user_group: libvirt-qemu
-ansible_role_libvirtd_python_packages:
+ansible_role_vmlab_conf_path: /etc/libvirt/libvirtd.conf
+ansible_role_vmlab_service_name: libvirtd
+ansible_role_vmlab_user_group: libvirt-qemu
+ansible_role_vmlab_python_packages:
   - python-libvirt
   - virtinst
 
-ansible_role_libvirtd_url: http://httpredir.debian.org/debian
+ansible_role_vmlab_url: http://httpredir.debian.org/debian

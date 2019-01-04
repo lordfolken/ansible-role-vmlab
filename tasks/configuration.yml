@@ -84,22 +84,23 @@
    template:
      src: "create-vm.sh.j2"
      dest: "{{ ansible_role_vmlab.mntpointcontrol }}/bin/create-vm-{{ item.key }}.sh"
-     mode: 0755
+     mode: 0775
      owner: root
      group: root
    tags:
    - shell
    with_dict: "{{ ansible_role_vmlab_virtoses }}"
 
- - name: install apache
-   package:
-     name: apache2
-
- - name: enable service
-   service:
-     name: apache2
-     state: started
-     enabled: true
+ - name: deploy clone script with user context
+   template:
+     src: "clone-vm.sh.j2"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/sbin/clone-vm-{{ item.key }}.sh"
+     mode: 0775
+     owner: root
+     group: root
+   tags:
+   - shell
+   with_dict: "{{ ansible_role_vmlab_virtoses }}"
 
  - name: install vmlandscape preseed host configuration
    template:
@@ -142,8 +143,4 @@
    with_items:
    - vm-destroy.sh
 
- - name: deploy clone script with user context
-   template:
-     src: debian-base-9-clone.sh.j2
-     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/sbin/debian-base-9-clone.sh"
-     mode: 0755
+

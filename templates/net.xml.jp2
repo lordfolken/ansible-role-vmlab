@@ -8,7 +8,7 @@
   <domain name='{{ item.value.domainname }}' localOnly='yes'/>
   <ip address='{{ item.value.subnet | ipaddr('address') }}' netmask='{{ item.value.subnet | ipaddr('netmask') }}'>
     <dhcp>
-      <range start='{{ item.value.subnet | ipaddr('net') | ipaddr('128') }}' end='{{ item.value.subnet | ipaddr('net') | ipaddr('254') }}'/>
+      <range start='{{ item.value.subnet | ipaddr('128') | ipaddr('address') }}' end='{{ item.value.subnet | ipaddr('254') | ipaddr('address') }}'/>
       <bootp file='pxelinux.0' server='{{ item.value.subnet | ipaddr('address') }}' /> 
     </dhcp>
   </ip>

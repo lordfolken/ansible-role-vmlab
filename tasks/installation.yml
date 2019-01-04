@@ -12,3 +12,15 @@
    package:
      name: "{{ item }}"
    with_items: "{{ ansible_role_vmlab_python_packages }}"
+
+ - name: install apache
+   package:
+     name: apache2
+
+ - name: enable service
+   service:
+     name: apache2
+     state: started
+     enabled: true
+
+

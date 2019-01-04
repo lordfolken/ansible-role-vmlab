@@ -1,9 +1,9 @@
-ansible_role_libvirtd_root_password: '!'
-ansible_role_libvirtd_root_sshkey: "" 
-ansible_role_libvirtd_users: 
+ansible_role_vmlab_root_password: '!'
+ansible_role_vmlab_root_sshkey: "" 
+ansible_role_vmlab_users: 
   - root
-ansible_role_libvirtd_mntpoint: /opt/vmlandscape/
-ansible_role_libvirtd:
+ansible_role_vmlab_mntpoint: /opt/vmlandscape/
+ansible_role_vmlab:
   zpool: zfs
   zvol: vmlandscape
   mntpoint: /var/lib/vmlandscape
@@ -11,13 +11,13 @@ ansible_role_libvirtd:
   mntpointcontrol: /opt/vmlandscape-control/
   qstring: qemu:///system
 
-ansible_role_libvirtd_pools:
+ansible_role_vmlab_pools:
   vmlandscape:
     mountpoint: /var/lib/vmlandscape
   vmlandscape-control:
     mountpoint: /opt/vmlandscape-control
 
-ansible_role_libvirtd_nets:
+ansible_role_vmlab_nets:
   vmlandscape:
     domainname: example.noexit
     subnet: 192.168.122.1/24
@@ -28,7 +28,7 @@ ansible_role_libvirtd_nets:
     domainname: test2.example.noexit
     subnet: 192.168.124.1/24
 
-ansible_role_libvirtd_virtoses:
+ansible_role_vmlab_virtoses:
   debian:
     boxname: base-debian-9.example.noexit
     memory: 1024

@@ -42,7 +42,7 @@ ansible_role_vmlab_virtoses:
     installpath: /dists/stretch/main/installer-amd64 
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian-stable/debian-stable.preseed"
-    location_host: 192.168.122.1:9999 
+    location_host: 192.168.122.1:9999/debian 
     netname: vmlandscape 
   debian-buster:
     codename: buster
@@ -54,7 +54,7 @@ ansible_role_vmlab_virtoses:
     installpath: /dists/buster/main/installer-amd64 
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian-buster/debian-buster.preseed"
-    location_host: 192.168.122.1:9999 
+    location_host: 192.168.122.1:9999/debian 
     netname: vmlandscape 
   opensuse:
     boxname: base-opensuse-current.{{ ansible_role_vmlab_nets.vmlandscape.domainname }}
@@ -65,5 +65,5 @@ ansible_role_vmlab_virtoses:
     installpath: /distribution/openSUSE-current/repo/oss/
     extra_args: "console=tty0,ttyS0,115200n8 serial auto keymap=us hostname=$HOSTNAME domain=$DOMAIN netcfg=dhcp install=http://192.168.122.1:9999/opensuse/distribution/openSUSE-current/repo/oss/ net.ifnames=0"
     preseed_url: "autoyast=http://192.168.122.1/opensuse/opensuse.preseed"
-    location_host: 192.168.122.1:9999 
+    location_host: 192.168.122.1:9999/opensuse 
     netname: vmlandscape 

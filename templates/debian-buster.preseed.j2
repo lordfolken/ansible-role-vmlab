@@ -1,12 +1,12 @@
 # for internal use
 
 d-i mirror/country string manual
-d-i mirror/http/hostname string {{ ansible_role_vmlab_virtoses.debian.location_host }}
+d-i mirror/http/hostname string {{ item.value.location_host }}
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
-d-i mirror/suite string stretch
-d-i apt-setup/security_host {{ ansible_role_vmlab_virtoses.debian.location_host }}
-
+d-i mirror/suite string {{ item.value.codename }}
+d-i apt-setup/security_host {{ item.value.location_host }}
+d-i passwd/root-login boolean false
 d-i passwd/make-user boolean true
 # To create a normal user account.
 d-i passwd/user-fullname string {{ ansible_role_vmlab_vmuser_name }}
@@ -18,8 +18,6 @@ d-i passwd/username string {{ ansible_role_vmlab_vmuser_name }}
 d-i passwd/user-password-crypted password {{ ansible_role_vmlab_vmuser_password | password_hash('sha512') }}
 # # Create the first user with the specified UID instead of the default.
 # #d-i passwd/user-uid string 1010
-
-d-i passwd/root-password-crypted password {{ ansible_role_vmlab_root_password | password_hash('sha512') }}
 
 d-i clock-setup/utc boolean true
 d-i time/zone string EU/Zurich

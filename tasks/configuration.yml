@@ -117,21 +117,17 @@
 
  - name: create deployment dirs
    file:
-     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item }}"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item.key }}"
      state: directory
-   with_items:
-   - opensuse
-   - debian
+   loop: "{{ ansible_role_vmlab_virtoses|dict2items }}"
    tags:
    - shell
 
  - name: deploy preseed
    template:
-     src: "{{ item }}.preseed.j2"
-     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item }}/{{ item }}.preseed"
-   with_items:
-   - opensuse
-   - debian
+     src: "{{ item.key }}.preseed.j2"
+     dest: "{{ ansible_role_vmlab.mntpointcontrol }}/public_html/{{ item.key }}/{{ item.key }}.preseed"
+   loop: "{{ ansible_role_vmlab_virtoses|dict2items }}"
    tags:
    - shell
 
@@ -142,5 +138,3 @@
      mode: 0755
    with_items:
    - vm-destroy.sh
-
-

@@ -3,10 +3,18 @@
 QSTRING="{{ ansible_role_vmlab.qstring }}"
 if [ -z "${1}" ]; then 
   BOXNAME="{{ item.value.boxname }}"
+  CACHEMODE=unsafe
 else 
   HOSTNAME=$(echo $1 | cut -f1 -d.)
   DOMAIN=$(echo $1 | cut -f2- -d.)
   BOXNAME="${HOSTNAME}.${DOMAIN}"
+  CACHEMODE=none
+fi
+
+if [ -z "${2}" ]; then 
+  SUITE=${2}
+else
+  SUITE=stable
 fi
 
 virsh --connect $QSTRING list --all | grep $BOXNAME 
@@ -20,7 +28,7 @@ virt-install \
   --memory {{ item.value.memory }} \
   --vcpus {{ item.value.cpu }} \
   --cpu host \
-  --disk size={{ item.value.disksize }},pool={{ ansible_role_vmlab.zvol }},bus=virtio \
+  --disk size={{ item.value.disksize }},pool={{ ansible_role_vmlab.zvol }},bus=virtio,cache=$CACHEMODE \
   --net network={{ item.value.netname }},model=virtio \
   --os-variant {{ item.value.osvariant }} \
   --os-type linux \

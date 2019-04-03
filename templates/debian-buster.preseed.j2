@@ -2,7 +2,7 @@
 
 d-i mirror/country string manual
 d-i mirror/http/hostname string {{ item.value.location_host }}
-d-i mirror/http/directory string /debian
+d-i mirror/http/directory string {{ item.value.location_path }}
 d-i mirror/http/proxy string
 d-i mirror/suite string {{ item.value.codename }}
 d-i apt-setup/security_host {{ item.value.location_host }}

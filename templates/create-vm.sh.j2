@@ -35,5 +35,5 @@ virt-install \
   --name "$BOXNAME" \
   --noautoconsole \
   --console pty,target_type=serial \
-  --location 'http://{{ item.value.location_host }}/{{ item.value.installpath }}' \
+  --location 'http://{{ item.value.location_host }}/{{ item.value.location_path }}/{{ item.value.installpath }}' \
   --extra-args "{{ item.value.extra_args }} {{ item.value.preseed_url }}"

@@ -17,4 +17,5 @@ galaxy_info:
   - debian
   - apt-cacher-ng  
   - virtinst
-dependencies: []
+dependencies:
+  - ansible-role-apt-cacher-ng 

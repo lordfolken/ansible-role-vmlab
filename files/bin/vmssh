@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$1" ]
+then
+  echo "specifiy ip"
+  exit 1
+else 
+  IP=$(dig @192.168.122.1 $1 +short)
+fi
+
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null  root@${IP}

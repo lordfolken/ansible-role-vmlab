@@ -140,9 +140,7 @@
    - vm-destroy.sh
 
  - name: deploy vmssh scripts
-   copy:
-     src: "bin/{{ item }}"
+   template:
+     src: "vmssh"
      dest: "/usr/local/bin/vmssh"
      mode: 0755
-   with_items:
-   - vmssh

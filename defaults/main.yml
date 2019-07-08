@@ -34,27 +34,27 @@ ansible_role_vmlab_nets:
 ansible_role_vmlab_virtoses:
   debian-stable:
     codename: stable
-    boxname: base-debian-9.{{ ansible_role_vmlab_nets.vmlandscape.domainname }}
+    boxname: base-debian-stable.{{ ansible_role_vmlab_nets.vmlandscape.domainname }}
     memory: 1024
     cpu: 2
     disksize: 10
     osvariant: debian8
-    installpath: /dists/stretch/main/installer-amd64 
+    installpath: /dists/stable/main/installer-amd64 
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
     preseed_url: "preseed/url=http://192.168.122.1/debian-stable/debian-stable.preseed"
     location_host: 192.168.122.1:9999
     location_path: /debian
     netname: vmlandscape 
-  debian-buster:
-    codename: buster
-    boxname: base-debian-10.{{ ansible_role_vmlab_nets.vmlandscape.domainname }}
+  debian-oldstable:
+    codename: oldstable
+    boxname: base-debian-oldstable.{{ ansible_role_vmlab_nets.vmlandscape.domainname }}
     memory: 1024
     cpu: 2
     disksize: 10
     osvariant: debian8
-    installpath: /dists/buster/main/installer-amd64 
+    installpath: /dists/oldstable/main/installer-amd64 
     extra_args: "console=tty0,ttyS0,115200n8 serial auto language=en country=CH locale=en_GB.UTF-8 keymap=us hostname=$HOSTNAME domain=$DOMAIN net.ifnames=0"
-    preseed_url: "preseed/url=http://192.168.122.1/debian-buster/debian-buster.preseed"
+    preseed_url: "preseed/url=http://192.168.122.1/debian-oldstable/debian-oldstable.preseed"
     location_host: 192.168.122.1:9999
     location_path: /debian
     netname: vmlandscape 

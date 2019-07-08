@@ -2,7 +2,7 @@
 
 if [ -z "$1" ]
 then
-  echo "specifiy ip"
+  echo "specify ip"
   exit 1
 else 
   IP=$(dig @192.168.122.1 $1 +short)
